@@ -22,11 +22,15 @@ COPY clients.retailcrm.pool.conf /etc/php7/php-fpm.d/
 
 # Install Symfony CLI
 RUN apt-get update && apt-get install -y \
-    git wget
+    git wget unzip
 RUN wget https://get.symfony.com/cli/installer -O - | bash
 RUN mv /root/.symfony/bin/symfony /usr/local/bin/symfony
 
 CMD ["php-fpm"]
+
+#RUN addgroup --gid 1000 symfony
+RUN adduser --gid 1000 --uid 1000 --disabled-password --quiet symfony
+USER symfony
 
 WORKDIR /var/www/clients.retailcrm
 
