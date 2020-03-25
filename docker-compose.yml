@@ -10,8 +10,6 @@ services:
       POSTGRES_USER: retailcrm
       POSTGRES_PASSWORD: password
       POSTGRES_DB: retailcrm-clients
-    networks:
-      - db
   php:
     container_name: php
     build: ./docker/php
@@ -20,12 +18,9 @@ services:
     volumes:
       - .:/var/www/clients.retailcrm
 #      - ./logs/symfony:/var/www/symfony/var/log
-    user: "www-data:www-data"
+    user: "1000:1000"
     depends_on:
       - db
-    networks:
-      - db
-      - php
   nginx:
     container_name: nginx
     build: ./docker/nginx
@@ -33,11 +28,6 @@ services:
       - "8088:80"
     depends_on:
       - php
-    networks:
-      - php
     volumes:
 #      - ./logs/nginx:/var/log/nginx
       - .:/var/www/clients.retailcrm
-networks:
-  db:
-  php:

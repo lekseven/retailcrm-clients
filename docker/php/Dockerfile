@@ -20,6 +20,7 @@ COPY xdebug.ini  /etc/php7/conf.d/
 
 COPY clients.retailcrm.pool.conf /etc/php7/php-fpm.d/
 
+# Install Symfony CLI
 RUN apt-get update && apt-get install -y \
     git wget
 RUN wget https://get.symfony.com/cli/installer -O - | bash
