@@ -1,0 +1,43 @@
+version: '3.7'
+services:
+  db:
+    container_name: db
+    image: postgres
+    restart: always
+    ports:
+      - "54320:5432"
+    environment:
+      POSTGRES_USER: retailcrm
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: retailcrm-clients
+    networks:
+      - db
+  php:
+    container_name: php
+    build: ./docker/php
+    ports:
+      - "9100:9000"
+    volumes:
+      - .:/var/www/clients.retailcrm
+#      - ./logs/symfony:/var/www/symfony/var/log
+    user: "www-data:www-data"
+    depends_on:
+      - db
+    networks:
+      - db
+      - php
+  nginx:
+    container_name: nginx
+    build: ./docker/nginx
+    ports:
+      - "8088:80"
+    depends_on:
+      - php
+    networks:
+      - php
+    volumes:
+#      - ./logs/nginx:/var/log/nginx
+      - .:/var/www/clients.retailcrm
+networks:
+  db:
+  php:
