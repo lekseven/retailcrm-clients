@@ -133,8 +133,8 @@ class Client
     public function addAddress(Address $address): self
     {
         if (!$this->addresses->contains($address)) {
-            $this->addresses[] = $address;
-            $address->setCity($this);
+            $this->addresses->add($address);
+            $address->setClient($this);
         }
 
         return $this;

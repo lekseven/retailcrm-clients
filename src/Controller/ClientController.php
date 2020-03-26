@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Address;
 use App\Entity\Client;
 use App\Form\ClientType;
 use App\Pagination\Paginator;
