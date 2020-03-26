@@ -4,8 +4,8 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ClientRepository")
@@ -47,7 +47,12 @@ class Client
     private $updatedAt;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Address", inversedBy="clients")
+     * @ORM\OneToMany(
+     *     targetEntity="App\Entity\Address",
+     *     mappedBy="client",
+     *     orphanRemoval=true,
+     *     cascade={"persist"}
+     * )
      */
     private $addresses;
 
@@ -119,6 +124,7 @@ class Client
     {
         if (!$this->addresses->contains($address)) {
             $this->addresses[] = $address;
+            $address->setCity($this);
         }
 
         return $this;

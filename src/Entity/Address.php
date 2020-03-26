@@ -2,8 +2,6 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -29,14 +27,9 @@ class Address
     private $address;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Client", mappedBy="addresses")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Client", inversedBy="addresses")
      */
-    private $clients;
-
-    public function __construct()
-    {
-        $this->clients = new ArrayCollection();
-    }
+    private $client;
 
     public function getId(): ?int
     {
@@ -67,30 +60,14 @@ class Address
         return $this;
     }
 
-    /**
-     * @return Collection|Client[]
-     */
-    public function getClients(): Collection
+    public function getClient(): Client
     {
-        return $this->clients;
+        return $this->client;
     }
 
-    public function addClient(Client $client): self
+    public function setClient(Client $client): self
     {
-        if (!$this->clients->contains($client)) {
-            $this->clients[] = $client;
-            $client->addAddress($this);
-        }
-
-        return $this;
-    }
-
-    public function removeClient(Client $client): self
-    {
-        if ($this->clients->contains($client)) {
-            $this->clients->removeElement($client);
-            $client->removeAddress($this);
-        }
+        $this->client = $client;
 
         return $this;
     }
