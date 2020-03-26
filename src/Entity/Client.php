@@ -66,9 +66,15 @@ class Client
      */
     private $addresses;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ClientLog", mappedBy="client")
+     */
+    private $clientLogs;
+
     public function __construct()
     {
         $this->addresses = new ArrayCollection();
+        $this->clientLogs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -144,6 +150,33 @@ class Client
     {
         if ($this->addresses->contains($address)) {
             $this->addresses->removeElement($address);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ClientLog[]
+     */
+    public function getClientLogs(): Collection
+    {
+        return $this->clientLogs;
+    }
+
+    public function addClientLog(ClientLog $clientLog): self
+    {
+        if (!$this->clientLogs->contains($clientLog)) {
+            $this->clientLogs[] = $clientLog;
+            $clientLog->setClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeClientLog(ClientLog $clientLog): self
+    {
+        if ($this->clientLogs->contains($clientLog)) {
+            $this->clientLogs->removeElement($clientLog);
         }
 
         return $this;
