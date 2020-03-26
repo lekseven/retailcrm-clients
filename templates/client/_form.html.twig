@@ -1,4 +1,9 @@
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+
 {{ form_start(form) }}
     {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+
+    <div class="float-left">
+        <button class="btn btn-success mb-2">{{ button_label|default('SAVE') }}</button>
+    </div>
 {{ form_end(form) }}

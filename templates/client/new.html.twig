@@ -3,9 +3,12 @@
 {% block title %}New Client{% endblock %}
 
 {% block body %}
-    <h1>Create new Client</h1>
+    <div class="container">
+        <h1>Create new Client</h1>
 
-    {{ include('client/_form.html.twig') }}
+        <a class="btn btn-primary" href="{{ path('client_index') }}">BACK TO LIST</a>
 
-    <a href="{{ path('client_index') }}">back to list</a>
+        {{ include('client/_form.html.twig') }}
+    </div>
 {% endblock %}
+
