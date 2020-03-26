@@ -7,16 +7,6 @@
 
     <h2>Addresses</h2>
 
-{#    <div class="addresses" data-prototype="{{ form_widget(form.addresses.vars.prototype)|e('html_attr') }}">#}
-{#        #}{# @var address \App\Entity\Address #}
-{#        {% for address in form.addresses %}#}
-{#            <div class="row">#}
-{#                <div class="col-4">{{ form_row(address.city) }}</div>#}
-{#                <div class="col-8">{{ form_row(address.address) }}</div>#}
-{#            </div>#}
-{#        {% endfor %}#}
-{#    </div>#}
-
     {{ form_widget(form.addresses) }}
 
     <a class="btn btn-primary js-add-address" href="#" role="button">Add an address</a>
