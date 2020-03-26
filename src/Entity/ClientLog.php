@@ -37,12 +37,12 @@ class ClientLog
         $this->createdAt = new \DateTime();
     }
 
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getClient(): Client
+    public function getClient(): ?Client
     {
         return $this->client;
     }
@@ -54,7 +54,7 @@ class ClientLog
         return $this;
     }
 
-    public function getCreatedAt(): \DateTimeInterface
+    public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
     }
@@ -66,7 +66,7 @@ class ClientLog
         return $this;
     }
 
-    public function getChanges(): array
+    public function getChanges(): ?array
     {
         return $this->changes;
     }
