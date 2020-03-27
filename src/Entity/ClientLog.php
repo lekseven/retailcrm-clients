@@ -17,10 +17,9 @@ class ClientLog
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Client", inversedBy="clientLogs")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\Column(type="integer")
      */
-    private $client;
+    private $clientId;
 
     /**
      * @ORM\Column(type="datetime")
@@ -31,6 +30,11 @@ class ClientLog
      * @ORM\Column(type="json")
      */
     private $changes = [];
+
+    /**
+     * @ORM\Column(type="string", length=15)
+     */
+    private $action;
 
     public function __construct()
     {
@@ -44,12 +48,12 @@ class ClientLog
 
     public function getClient(): ?Client
     {
-        return $this->client;
+        return $this->clientId;
     }
 
-    public function setClient(Client $client): self
+    public function setClient(int $clientId): self
     {
-        $this->client = $client;
+        $this->clientId = $clientId;
 
         return $this;
     }
@@ -74,6 +78,18 @@ class ClientLog
     public function setChanges(array $changes): self
     {
         $this->changes = $changes;
+
+        return $this;
+    }
+
+    public function getAction(): ?string
+    {
+        return $this->action;
+    }
+
+    public function setAction(string $action): self
+    {
+        $this->action = $action;
 
         return $this;
     }
