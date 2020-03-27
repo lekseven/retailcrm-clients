@@ -23,7 +23,7 @@ class ClientController extends AbstractController
      */
     public function index(Request $request, int $page, ClientRepository $clients): Response
     {
-        $qb = $clients->createQueryBuilder('c');
+        $qb = $clients->createQueryBuilder('c')->addOrderBy('c.id', 'ASC');
 
         return $this->render('client/index.html.twig', [
             'paginator' => (new Paginator($qb))->paginate($page),
