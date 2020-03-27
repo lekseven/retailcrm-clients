@@ -61,7 +61,7 @@ class Client
      * @ORM\OneToMany(
      *     targetEntity="App\Entity\Address",
      *     mappedBy="client",
-     *     cascade={"persist", "refresh"}
+     *     cascade={"persist", "refresh", "remove"}
      * )
      */
     private $addresses;

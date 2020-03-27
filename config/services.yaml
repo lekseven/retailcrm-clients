@@ -23,6 +23,6 @@ services:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
 
-    App\EventListener\EntityLogListener:
+    App\EventListener\ActivityLogListener:
         tags:
             - { name: 'doctrine.event_listener', event: 'onFlush' }

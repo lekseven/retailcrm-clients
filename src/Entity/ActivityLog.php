@@ -5,10 +5,14 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\ClientLogRepository")
+ * @ORM\Entity(repositoryClass="ActivityLogRepository")
  */
-class ClientLog
+class ActivityLog
 {
+    const ACTION_INSERT = 'insert';
+    const ACTION_UPDATE = 'update';
+    const ACTION_DELETE = 'delete';
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -19,7 +23,7 @@ class ClientLog
     /**
      * @ORM\Column(type="integer")
      */
-    private $clientId;
+    private $entityId;
 
     /**
      * @ORM\Column(type="datetime")
@@ -27,14 +31,19 @@ class ClientLog
     private $createdAt;
 
     /**
-     * @ORM\Column(type="json")
+     * @ORM\Column(type="json", options={"charset": "utf8"})
      */
-    private $changes = [];
+    private $changeSet = [];
 
     /**
      * @ORM\Column(type="string", length=15)
      */
     private $action;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $entityType;
 
     public function __construct()
     {
@@ -46,14 +55,14 @@ class ClientLog
         return $this->id;
     }
 
-    public function getClient(): ?Client
+    public function getEntityId(): int
     {
-        return $this->clientId;
+        return $this->entityId;
     }
 
-    public function setClient(int $clientId): self
+    public function setEntityId(int $entityId): self
     {
-        $this->clientId = $clientId;
+        $this->entityId = $entityId;
 
         return $this;
     }
@@ -70,14 +79,14 @@ class ClientLog
         return $this;
     }
 
-    public function getChanges(): ?array
+    public function getChangeSet(): ?array
     {
-        return $this->changes;
+        return $this->changeSet;
     }
 
-    public function setChanges(array $changes): self
+    public function setChangeSet(array $changeSet): self
     {
-        $this->changes = $changes;
+        $this->changeSet = $changeSet;
 
         return $this;
     }
@@ -90,6 +99,26 @@ class ClientLog
     public function setAction(string $action): self
     {
         $this->action = $action;
+
+        return $this;
+    }
+
+    public function getEntityType(): ?string
+    {
+        return $this->entityType;
+    }
+
+    public function setEntityType(string $entityType): self
+    {
+        $this->entityType = $entityType;
+
+        return $this;
+    }
+
+    public function setEntity(int $entityId, string $entityType): self
+    {
+        $this->entityId = $entityId;
+        $this->entityType = $entityType;
 
         return $this;
     }
