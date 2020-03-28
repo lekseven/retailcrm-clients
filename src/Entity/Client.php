@@ -61,6 +61,7 @@ class Client
      * @ORM\OneToMany(
      *     targetEntity="App\Entity\Address",
      *     mappedBy="client",
+     *     orphanRemoval=true,
      *     cascade={"persist", "refresh", "remove"}
      * )
      */
