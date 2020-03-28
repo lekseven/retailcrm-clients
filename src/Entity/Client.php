@@ -12,8 +12,10 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass="App\Repository\ClientRepository")
  * @ORM\HasLifecycleCallbacks()
  */
-class Client
+class Client implements ChangeSetFilterInterface
 {
+    use FiltersChangeSet;
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -66,6 +68,12 @@ class Client
      * )
      */
     private $addresses;
+
+    private $excludeProperties = [
+        'id',
+        'createdAt',
+        'updatedAt',
+    ];
 
     public function __construct()
     {

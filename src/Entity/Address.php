@@ -8,8 +8,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AddressRepository")
  */
-class Address
+class Address implements ChangeSetFilterInterface
 {
+    use FiltersChangeSet;
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -33,6 +35,10 @@ class Address
      * @ORM\ManyToOne(targetEntity="App\Entity\Client", inversedBy="addresses")
      */
     private $client;
+
+    private $excludeProperties = [
+        'id',
+    ];
 
     public function getId(): ?int
     {

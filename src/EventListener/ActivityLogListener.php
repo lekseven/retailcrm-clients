@@ -5,9 +5,14 @@ namespace App\EventListener;
 
 
 use App\Entity\ActivityLog;
+use App\Entity\ChangeSetFilterInterface;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Event\OnFlushEventArgs;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
 
 class ActivityLogListener
 {
@@ -46,14 +51,13 @@ class ActivityLogListener
 
         $log = new ActivityLog();
         $log->setAction($action);
-
-        if ($action == ActivityLog::ACTION_DELETE) {
-            $log->setChangeSet((array)$entity);
-        } else {
-            $log->setChangeSet($uow->getEntityChangeSet($entity));
-        }
-
         $log->setEntity($entity->getId(), get_class($entity));
+
+        $changeSet = $uow->getEntityChangeSet($entity);
+        if ($entity instanceof ChangeSetFilterInterface) {
+            $changeSet = $entity->filterChangeSet($changeSet);
+        }
+        $log->setChangeSet($changeSet);
 
         $em->persist($log);
         $uow->computeChangeSet($em->getClassMetadata(ActivityLog::class), $log);
