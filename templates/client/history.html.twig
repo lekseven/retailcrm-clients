@@ -1,0 +1,22 @@
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th style="width: 10%">Action</th>
+            <th style="width: 70%">Change</th>
+            <th style="width: 20%">Date</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entry in history %}
+        <tr>
+            <td>{{ entry.action }}</td>
+            <td>{{ entry.changeSet|json_encode }}</td>
+            <td>{{ entry.createdAt|date('Y-m-d H-i-s') }}</td>
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="3">no records found</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

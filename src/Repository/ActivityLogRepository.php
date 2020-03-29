@@ -19,6 +19,20 @@ class ActivityLogRepository extends ServiceEntityRepository
         parent::__construct($registry, ActivityLog::class);
     }
 
+    public function findByEntity(int $entityId, string $entityType): array
+    {
+        return $this->createQueryBuilder('log')
+            ->andWhere('log.entityId = :entityId')
+            ->andWhere('log.entityType = :entityType')
+            ->setParameter('entityId', $entityId)
+            ->setParameter('entityType', $entityType)
+            ->orderBy('log.createdAt', 'DESC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     // /**
     //  * @return ClientLog[] Returns an array of ClientLog objects
     //  */

@@ -6,6 +6,7 @@ use App\Entity\Address;
 use App\Entity\Client;
 use App\Form\ClientType;
 use App\Pagination\Paginator;
+use App\Repository\ActivityLogRepository;
 use App\Repository\ClientRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -56,10 +57,13 @@ class ClientController extends AbstractController
     /**
      * @Route("/{id}", name="client_show", methods={"GET"})
      */
-    public function show(Client $client): Response
+    public function show(Client $client, ActivityLogRepository $activityLog): Response
     {
+        $history = $activityLog->findByEntity($client->getId(), get_class($client));
+
         return $this->render('client/show.html.twig', [
             'client' => $client,
+            'history' => $history,
         ]);
     }
 
