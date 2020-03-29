@@ -8,10 +8,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AddressRepository")
  */
-class Address implements ChangeSetFilterInterface
+class Address implements ActivityLoggable
 {
-    use FiltersChangeSet;
-
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -35,11 +33,6 @@ class Address implements ChangeSetFilterInterface
      * @ORM\ManyToOne(targetEntity="App\Entity\Client", inversedBy="addresses")
      */
     private $client;
-
-    private $excludeProperties = [
-        'id',
-        'client',
-    ];
 
     public function getId(): ?int
     {
@@ -80,5 +73,13 @@ class Address implements ChangeSetFilterInterface
         $this->client = $client;
 
         return $this;
+    }
+
+    public function getDeniedProperties(): array
+    {
+        return [
+            'id',
+            'client',
+        ];
     }
 }

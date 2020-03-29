@@ -12,10 +12,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass="App\Repository\ClientRepository")
  * @ORM\HasLifecycleCallbacks()
  */
-class Client implements ChangeSetFilterInterface
+class Client implements ActivityLoggable
 {
-    use FiltersChangeSet;
-
     const ADDRESS_LIMIT = 5;
 
     /**
@@ -29,8 +27,10 @@ class Client implements ChangeSetFilterInterface
      * @ORM\Column(type="string", length=255)
      * @Assert\Length(
      *     min="3",
-     *     max="255"
+     *     max="255",
+     *     charset="utf8"
      * )
+     * @Assert\NotBlank()
      */
     private $name;
 
@@ -40,6 +40,7 @@ class Client implements ChangeSetFilterInterface
      *     min="10",
      *     max="15"
      * )
+     * @Assert\NotBlank()
      * @Assert\Regex(pattern="/^\d+$/")
      */
     private $phone;
@@ -47,6 +48,7 @@ class Client implements ChangeSetFilterInterface
     /**
      * @ORM\Column(type="string", length=254)
      * @Assert\Email()
+     * @Assert\NotBlank()
      */
     private $email;
 
@@ -72,12 +74,6 @@ class Client implements ChangeSetFilterInterface
      * @Assert\Count(max=Client::ADDRESS_LIMIT)
      */
     private $addresses;
-
-    private $excludeProperties = [
-        'id',
-        'createdAt',
-        'updatedAt',
-    ];
 
     public function __construct()
     {
@@ -160,5 +156,14 @@ class Client implements ChangeSetFilterInterface
         }
 
         return $this;
+    }
+
+    public function getDeniedProperties(): array
+    {
+        return [
+            'id',
+            'createdAt',
+            'updatedAt',
+        ];
     }
 }

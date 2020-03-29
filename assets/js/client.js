@@ -33,4 +33,7 @@ $('#client_phone').inputmask({
     'mask': '+7 (999) 999-9999',
     'removeMaskOnSubmit': true,
     'clearMaskOnLostFocus': false,
+    onUnMask: function(maskedValue, unmaskedValue) {
+        return unmaskedValue.replace(/[+()\s-]/g, '');
+    }
 });

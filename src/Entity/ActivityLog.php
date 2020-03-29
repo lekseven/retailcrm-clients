@@ -5,7 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="ActivityLogRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\ActivityLogRepository")
  */
 class ActivityLog
 {
@@ -84,11 +84,27 @@ class ActivityLog
         return $this->changeSet;
     }
 
-    public function setChangeSet(array $changeSet): self
+    public function setChangeSet(array $changeSet, array $denied = []): self
     {
-        $this->changeSet = $changeSet;
+        $this->changeSet = $this->filterChangeSet($changeSet, $denied);
 
         return $this;
+    }
+
+    private function filterChangeSet(array $changeSet, array $denied): array
+    {
+        if (!$denied) {
+            return $changeSet;
+        }
+
+        $allowedChanges = [];
+        foreach ($changeSet as $propertyName => $propertyChangeSet) {
+            if (!in_array($propertyName, $denied)) {
+                $allowedChanges[$propertyName] = $propertyChangeSet;
+            }
+        }
+
+        return $allowedChanges;
     }
 
     public function getAction(): ?string
