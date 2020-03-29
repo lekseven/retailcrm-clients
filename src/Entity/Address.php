@@ -38,6 +38,7 @@ class Address implements ChangeSetFilterInterface
 
     private $excludeProperties = [
         'id',
+        'client',
     ];
 
     public function getId(): ?int

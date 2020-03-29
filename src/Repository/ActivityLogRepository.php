@@ -33,6 +33,22 @@ class ActivityLogRepository extends ServiceEntityRepository
         ;
     }
 
+    public function findByEntities(array $entities): array
+    {
+        $qb = $this->createQueryBuilder('log');
+
+        foreach ($entities as $index => $entity) {
+            $qb->orWhere("log.entityId = :entityId$index and log.entityType = :entityType$index")
+                ->setParameter("entityId$index", $entity->getId())
+                ->setParameter("entityType$index", get_class($entity));
+        }
+
+        return $qb->orderBy('log.createdAt', 'DESC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return ClientLog[] Returns an array of ClientLog objects
     //  */
