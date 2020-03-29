@@ -1,0 +1,25 @@
+.btn-back {
+    margin-bottom: 10px;
+}
+
+#client_addresses fieldset > div {
+    display: flex;
+}
+
+#client_addresses fieldset .form-group {
+    padding-right: 0.5em;
+}
+
+#client_addresses fieldset .form-group:first-child {
+    width: 30%;
+}
+
+#client_addresses fieldset .form-group:nth-child(2) {
+    width: 70%;
+}
+
+#client_addresses fieldset .form-group:last-child {
+    align-self: flex-end;
+    padding: 0;
+}
+

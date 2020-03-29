@@ -6,14 +6,16 @@
     {{ form_row(form.email) }}
 
     <h2>Addresses</h2>
+    <div class="form-group">
+        {{ form_widget(form.addresses) }}
+    </div>
+    <div class="form-group">
+        <a class="btn btn-primary js-add-address" href="#" role="button">Add an address</a>
+    </div>
 
-    {{ form_widget(form.addresses) }}
-
-    <a class="btn btn-primary js-add-address" href="#" role="button">Add an address</a>
-
-    {# TODO: заменить на a/input/submit #}
-    <br><br>
-    <button class="btn btn-success mb-2">{{ button_label|default('Save') }}</button>
+    <div class="form-group">
+        <button class="btn btn-success mb-2">{{ button_label|default('Save') }}</button>
+    </div>
 
     {{ form_widget(form._token) }}
 {{ form_end(form, {'render_rest': false}) }}
