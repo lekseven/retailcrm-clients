@@ -31,7 +31,7 @@ class ActivityLog
     private $createdAt;
 
     /**
-     * @ORM\Column(type="json", options={"charset": "utf8"})
+     * @ORM\Column(type="json")
      */
     private $changeSet = [];
 
