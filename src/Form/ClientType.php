@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Client;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -14,7 +15,7 @@ class ClientType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('phone')
+            ->add('phone', TelType::class)
             ->add('email')
         ;
 

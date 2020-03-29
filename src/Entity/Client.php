@@ -40,6 +40,7 @@ class Client implements ChangeSetFilterInterface
      *     min="10",
      *     max="15"
      * )
+     * @Assert\Regex(pattern="/^\d+$/")
      */
     private $phone;
 

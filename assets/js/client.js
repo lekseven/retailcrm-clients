@@ -1,4 +1,5 @@
 import $ from 'jquery';
+import 'inputmask/dist/jquery.inputmask';
 
 const $clientAddresses = $('#client_addresses');
 const $addAddressButton = $('.js-add-address');
@@ -26,4 +27,10 @@ $('body').on('click', '.js-remove-address', function () {
     if (addressesCount < ADDRESS_LIMIT) {
         $addAddressButton.show();
     }
+});
+
+$('#client_phone').inputmask({
+    'mask': '+7 (999) 999-9999',
+    'removeMaskOnSubmit': true,
+    'clearMaskOnLostFocus': false,
 });
