@@ -68,7 +68,7 @@ class Client implements ChangeSetFilterInterface
      *     orphanRemoval=true,
      *     cascade={"persist", "refresh", "remove"}
      * )
-     * @Assert\Count(max="Client::ADDRESS_LIMIT")
+     * @Assert\Count(max=Client::ADDRESS_LIMIT)
      */
     private $addresses;
 

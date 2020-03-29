@@ -45,7 +45,7 @@ class ClientController extends AbstractController
             $entityManager->persist($client);
             $entityManager->flush();
 
-            return $this->redirectToRoute('client_index');
+            return $this->redirectToRoute('client_show', ['id' => $client->getId()]);
         }
 
         return $this->render('client/new.html.twig', [
@@ -83,7 +83,7 @@ class ClientController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('client_index');
+            return $this->redirectToRoute('client_show', ['id' => $client->getId()]);
         }
 
         return $this->render('client/edit.html.twig', [
