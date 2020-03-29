@@ -10,11 +10,12 @@
         {{ form_widget(form.addresses) }}
     </div>
     <div class="form-group">
-        <a class="btn btn-primary js-add-address" href="#" role="button">Add an address</a>
+        <a class="btn btn-primary js-add-address" href="#" role="button"
+           data-address-limit="{{ constant('ADDRESS_LIMIT', client) }}">Add an address</a>
     </div>
 
     <div class="form-group">
-        <button class="btn btn-success mb-2">{{ button_label|default('Save') }}</button>
+        <button class="btn btn-success">{{ button_label|default('Save') }}</button>
     </div>
 
     {{ form_widget(form._token) }}

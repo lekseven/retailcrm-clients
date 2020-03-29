@@ -16,6 +16,8 @@ class Client implements ChangeSetFilterInterface
 {
     use FiltersChangeSet;
 
+    const ADDRESS_LIMIT = 5;
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -66,6 +68,7 @@ class Client implements ChangeSetFilterInterface
      *     orphanRemoval=true,
      *     cascade={"persist", "refresh", "remove"}
      * )
+     * @Assert\Count(max="Client::ADDRESS_LIMIT")
      */
     private $addresses;
 
