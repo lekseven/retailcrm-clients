@@ -10,4 +10,4 @@ docker-compose exec php doctrine:migrations:migrate
 docker-compose exec php php bin/console doctrine:fixtures:load
 ```
 
-Точка входа http://clients.retailcrm.localhost:8088/client/
+Точка входа http://clients.retailcrm.localhost:8088/
