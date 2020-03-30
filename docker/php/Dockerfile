@@ -28,7 +28,7 @@ RUN mv /root/.symfony/bin/symfony /usr/local/bin/symfony
 
 CMD ["php-fpm"]
 
-#RUN addgroup --gid 1000 symfony
+RUN addgroup --gid 1000 symfony
 RUN adduser --gid 1000 --uid 1000 --disabled-password --quiet symfony
 USER symfony
 
