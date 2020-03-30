@@ -53,7 +53,7 @@ class Address implements ActivityLoggable
         return $this->city;
     }
 
-    public function setCity(string $city): self
+    public function setCity(?string $city): self
     {
         $this->city = $city;
 
@@ -65,7 +65,7 @@ class Address implements ActivityLoggable
         return $this->address;
     }
 
-    public function setAddress(string $address): self
+    public function setAddress(?string $address): self
     {
         $this->address = $address;
 
