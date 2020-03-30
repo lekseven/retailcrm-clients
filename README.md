@@ -16,7 +16,7 @@ DATABASE_URL=postgresql://retailcrm:password@db:5432/retailcrm-clients?serverVer
 
 ```
 docker-compose up -d
-docker-compose exec php composer install && yarn install && yarn build
+docker-compose exec php bash -c "composer install && yarn install && yarn build"
 docker-compose exec php php bin/console doctrine:migrations:migrate
 docker-compose exec php php bin/console doctrine:fixtures:load
 ```
