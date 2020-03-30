@@ -31,6 +31,7 @@ class Client implements ActivityLoggable
      *     charset="utf8"
      * )
      * @Assert\NotBlank()
+     * @Assert\NotNull()
      */
     private $name;
 
@@ -41,6 +42,7 @@ class Client implements ActivityLoggable
      *     max="15"
      * )
      * @Assert\NotBlank()
+     * @Assert\NotNull()
      * @Assert\Regex(pattern="/^\d+$/")
      */
     private $phone;
@@ -49,6 +51,7 @@ class Client implements ActivityLoggable
      * @ORM\Column(type="string", length=254)
      * @Assert\Email()
      * @Assert\NotBlank()
+     * @Assert\NotNull()
      */
     private $email;
 
@@ -69,9 +72,10 @@ class Client implements ActivityLoggable
      *     targetEntity="App\Entity\Address",
      *     mappedBy="client",
      *     orphanRemoval=true,
-     *     cascade={"persist", "refresh", "remove"}
+     *     cascade={"all"}
      * )
      * @Assert\Count(max=Client::ADDRESS_LIMIT)
+     * @Assert\Valid
      */
     private $addresses;
 

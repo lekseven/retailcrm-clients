@@ -18,14 +18,18 @@ class Address implements ActivityLoggable
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=false)
      * @Assert\Length(max="255")
+     * @Assert\NotBlank
+     * @Assert\NotNull
      */
     private $city;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=false)
      * @Assert\Length(max="255")
+     * @Assert\NotBlank
+     * @Assert\NotNull
      */
     private $address;
 
