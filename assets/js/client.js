@@ -7,30 +7,36 @@ const ADDRESS_LIMIT = parseInt($addAddressButton.data('address-limit')) || 1;
 
 $clientAddresses.data('index', $clientAddresses.find('fieldset').length);
 
+const updateAddAddressButtonVisibility = () => {
+    const addressesCount = $clientAddresses.find('fieldset').length;
+    if (addressesCount >= ADDRESS_LIMIT) {
+        $addAddressButton.hide();
+    } else {
+        $addAddressButton.show();
+    }
+};
+updateAddAddressButtonVisibility();
+
 $addAddressButton.on('click', function () {
     const formPrototype = $clientAddresses.data('prototype');
     let index = $clientAddresses.data('index');
 
-    $clientAddresses.append(formPrototype.replace(/__name__/g, index));
+    let newForm = formPrototype.replace(/__name__/g, index);
+    $clientAddresses.append(newForm);
+
     $clientAddresses.data('index', index + 1);
 
-    const addressesCount = $clientAddresses.find('fieldset').length;
-    if (addressesCount === ADDRESS_LIMIT) {
-        $(this).hide();
-    }
+    updateAddAddressButtonVisibility();
 });
 
 $('body').on('click', '.js-remove-address', function () {
     $(this).closest('fieldset').remove();
 
-    const addressesCount = $clientAddresses.find('fieldset').length;
-    if (addressesCount < ADDRESS_LIMIT) {
-        $addAddressButton.show();
-    }
+    updateAddAddressButtonVisibility();
 });
 
 $('#client_phone').inputmask({
-    'mask': '+7 (999) 999-9999',
+    'mask': '+9 (999) 999-9999',
     'removeMaskOnSubmit': true,
     'clearMaskOnLostFocus': false,
     onUnMask: function(maskedValue, unmaskedValue) {
