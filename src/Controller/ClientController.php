@@ -59,16 +59,9 @@ class ClientController extends AbstractController
      */
     public function show(Client $client, ActivityLogRepository $activityLog): Response
     {
-        $entities[] = $client;
-        foreach ($client->getAddresses() as $address) {
-            $entities[] = $address;
-        }
-
-        $history = $activityLog->findByEntities($entities);
-
         return $this->render('client/show.html.twig', [
             'client' => $client,
-            'history' => $history,
+            'history' => $activityLog->findByEntity($client),
         ]);
     }
 

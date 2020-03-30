@@ -30,7 +30,12 @@ class Address implements ActivityLoggable
     private $address;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Client", inversedBy="addresses")
+     * @var Client
+     *
+     * @ORM\ManyToOne(
+     *     targetEntity="App\Entity\Client",
+     *     inversedBy="addresses"
+     * )
      */
     private $client;
 
@@ -75,11 +80,16 @@ class Address implements ActivityLoggable
         return $this;
     }
 
-    public function getDeniedProperties(): array
+    public function getExcludedProperties(): array
     {
         return [
             'id',
             'client',
         ];
+    }
+
+    public function getParentEntity()
+    {
+        return $this->client;
     }
 }

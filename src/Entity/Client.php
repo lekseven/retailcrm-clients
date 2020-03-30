@@ -158,12 +158,18 @@ class Client implements ActivityLoggable
         return $this;
     }
 
-    public function getDeniedProperties(): array
+    public function getExcludedProperties(): array
     {
         return [
             'id',
             'createdAt',
             'updatedAt',
+            'addresses',
         ];
+    }
+
+    public function getParentEntity()
+    {
+        return null;
     }
 }

@@ -45,18 +45,24 @@ class ActivityLogListener
     {
         $uow = $em->getUnitOfWork();
 
-        $log = new ActivityLog();
-        $log->setAction($action);
-        $log->setEntity($entity->getId(), get_class($entity));
+        $activityLog = new ActivityLog();
+        $activityLog->setAction($action);
+        $activityLog->setEntity($entity->getId(), get_class($entity));
 
-        $changeSet = $uow->getEntityChangeSet($entity);
-        if ($entity instanceof ActivityLoggable) {
-            $log->setChangeSet($changeSet, $entity->getDeniedProperties());
+        if ($action === ActivityLog::ACTION_UPDATE) {
+            $changeSet = $uow->getEntityChangeSet($entity);
         } else {
-            $log->setChangeSet($entity);
+            $changeSet = $uow->getOriginalEntityData($entity);
         }
 
-        $em->persist($log);
-        $uow->computeChangeSet($em->getClassMetadata(ActivityLog::class), $log);
+        if ($entity instanceof ActivityLoggable) {
+            $activityLog->setChangeSet($changeSet, $entity->getExcludedProperties());
+            $activityLog->setParentEntity($entity->getParentEntity());
+        } else {
+            $activityLog->setChangeSet($changeSet);
+        }
+
+        $em->persist($activityLog);
+        $uow->computeChangeSet($em->getClassMetadata(ActivityLog::class), $activityLog);
     }
 }

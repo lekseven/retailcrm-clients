@@ -45,6 +45,16 @@ class ActivityLog
      */
     private $entityType;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $parentId;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $parentType;
+
     public function __construct()
     {
         $this->createdAt = new \DateTime();
@@ -135,6 +145,40 @@ class ActivityLog
     {
         $this->entityId = $entityId;
         $this->entityType = $entityType;
+
+        return $this;
+    }
+
+    public function getParentId(): ?int
+    {
+        return $this->parentId;
+    }
+
+    public function setParentId(int $parentId): self
+    {
+        $this->parentId = $parentId;
+
+        return $this;
+    }
+
+    public function getParentType(): ?string
+    {
+        return $this->parentType;
+    }
+
+    public function setParentType(string $parentType): self
+    {
+        $this->parentType = $parentType;
+
+        return $this;
+    }
+
+    public function setParentEntity($parentEntity): self
+    {
+        if ($parentEntity) {
+            $this->parentId = $parentEntity->getId();
+            $this->parentType = get_class($parentEntity);
+        }
 
         return $this;
     }

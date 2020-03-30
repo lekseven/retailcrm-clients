@@ -19,62 +19,28 @@ class ActivityLogRepository extends ServiceEntityRepository
         parent::__construct($registry, ActivityLog::class);
     }
 
-    public function findByEntity(int $entityId, string $entityType): array
-    {
-        return $this->createQueryBuilder('log')
-            ->andWhere('log.entityId = :entityId')
-            ->andWhere('log.entityType = :entityType')
-            ->setParameter('entityId', $entityId)
-            ->setParameter('entityType', $entityType)
-            ->orderBy('log.createdAt', 'DESC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-
-    public function findByEntities(array $entities): array
+    public function findByEntity($entity): array
     {
         $qb = $this->createQueryBuilder('log');
 
-        foreach ($entities as $index => $entity) {
-            $qb->orWhere("log.entityId = :entityId$index and log.entityType = :entityType$index")
-                ->setParameter("entityId$index", $entity->getId())
-                ->setParameter("entityType$index", get_class($entity));
-        }
+        $qb->orWhere($qb->expr()->andX(
+            $qb->expr()->eq('log.entityId', ":entityId"),
+            $qb->expr()->eq('log.entityType', ":entityType")
+        ))
+            ->setParameter("entityId", $entity->getId())
+            ->setParameter("entityType", get_class($entity));
+
+        $qb->orWhere($qb->expr()->andX(
+            $qb->expr()->eq('log.parentId', ":parentId"),
+            $qb->expr()->eq('log.parentType', ":parentType")
+        ))
+            ->setParameter("parentId", $entity->getId())
+            ->setParameter("parentType", get_class($entity));
 
         return $qb->orderBy('log.createdAt', 'DESC')
             ->setMaxResults(10)
             ->getQuery()
-            ->getResult();
-    }
-
-    // /**
-    //  * @return ClientLog[] Returns an array of ClientLog objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
             ->getResult()
-        ;
+            ;
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?ClientLog
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

@@ -6,5 +6,7 @@ namespace App\Entity;
 
 interface ActivityLoggable
 {
-    public function getDeniedProperties(): array;
+    public function getExcludedProperties(): array;
+
+    public function getParentEntity();
 }
