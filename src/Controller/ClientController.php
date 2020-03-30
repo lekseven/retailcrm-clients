@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Address;
 use App\Entity\Client;
 use App\Form\ClientType;
 use App\Pagination\Paginator;
@@ -13,9 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/client")
- */
+
 class ClientController extends AbstractController
 {
     /**
